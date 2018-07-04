@@ -3,11 +3,18 @@
 
 export default class CartService{
 
-    constructor(  ){
+    constructor( localStorageService ){
 
-       this.cart = [];
+       if(localStorageService.get('cart')){
+           this.cart = localStorageService.get('cart');
+       }//if
+       else{
+           this.cart = [];
+       }//else
 
-    }
+       this.localStorageService = localStorageService;
+
+    }//constructor
 
     getCart(){
         return this.cart;
@@ -40,6 +47,8 @@ export default class CartService{
 
         }//else
 
+        this.localStorageService.set( 'cart' , this.cart );
+
     }
 
     _getSimplePhone( phone ){
@@ -52,9 +61,18 @@ export default class CartService{
 
     }
 
+    clearCart(){
+
+        this.localStorageService.clearAll();
+        this.cart.length = 0;
+
+    }
+
     removePhone( index ){
 
         this.cart.splice( index , 1 );
-    }
+        this.localStorageService.set( 'cart' , this.cart );
+
+    }//removePhone
 
 }

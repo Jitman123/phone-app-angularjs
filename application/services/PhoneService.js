@@ -5,6 +5,9 @@ export default class PhoneService{
     constructor( $http ){
 
         this.$http = $http;
+        this.searchObject = {
+            'searchString': ''
+        };
 
     }
 
@@ -24,8 +27,11 @@ export default class PhoneService{
         }//catch
     }
 
-    async getSinglePhone( url ){
+    getSearchObject(){
+        return this.searchObject;
+    }
 
+    async getSinglePhone( url ){
 
         try{
             let result = await this.$http.get( url );
